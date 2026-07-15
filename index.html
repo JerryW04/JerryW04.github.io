@@ -1,1 +1,355 @@
-Hello World
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jerry Wang — Software & AI Engineer</title>
+<meta name="description" content="Jerry Wang is a software and AI engineer from the University of Michigan, building distributed systems, AI agents, and flight software.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FAFAF7;
+  --ink:#101D33;
+  --navy:#14233F;
+  --navy-deep:#0D1830;
+  --maize:#FFCB05;
+  --gold-ink:#7A6100;
+  --muted:#5A6472;
+  --muted-light:#9AA3B2;
+  --line:#DCDEDA;
+  --line-dark:#2A3B5C;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Archivo',sans-serif;
+  font-variation-settings:'wdth' 100;
+  font-size:17px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+.mono{font-family:'IBM Plex Mono',monospace}
+a{color:inherit}
+a:focus-visible,button:focus-visible{outline:3px solid var(--maize);outline-offset:3px}
+.wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+
+/* ---------- telemetry rule (signature) ---------- */
+.telemetry{
+  display:flex;align-items:flex-end;gap:16px;
+  padding:0 24px;max-width:1060px;margin:88px auto 40px;
+}
+.telemetry .t-label{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:12px;letter-spacing:.14em;color:var(--gold-ink);
+  white-space:nowrap;padding-bottom:6px;
+}
+.telemetry .t-axis{flex:1;height:14px;position:relative}
+.telemetry .t-axis::before{
+  content:'';position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--ink);
+}
+.telemetry .t-axis::after{
+  content:'';position:absolute;left:0;right:0;bottom:0;height:7px;
+  background-image:repeating-linear-gradient(to right,var(--ink) 0 1px,transparent 1px 56px);
+}
+
+/* ---------- hero ---------- */
+header{
+  background:var(--navy);color:#F2F4F0;position:relative;overflow:hidden;
+}
+header::after{ /* faint telemetry grid */
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background-image:linear-gradient(var(--line-dark) 1px,transparent 1px),linear-gradient(90deg,var(--line-dark) 1px,transparent 1px);
+  background-size:56px 56px;opacity:.28;
+}
+.hero{
+  position:relative;z-index:1;
+  display:grid;grid-template-columns:1fr 300px;gap:56px;align-items:center;
+  padding:92px 24px 84px;max-width:1060px;margin:0 auto;
+}
+.status{
+  font-family:'IBM Plex Mono',monospace;font-size:12.5px;letter-spacing:.14em;
+  color:var(--maize);display:flex;align-items:center;gap:10px;margin-bottom:26px;
+}
+.status .dot{
+  width:8px;height:8px;border-radius:50%;background:var(--maize);
+  animation:pulse 2.4s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+h1{
+  font-variation-settings:'wdth' 118;
+  font-weight:850;font-size:clamp(52px,8.5vw,88px);
+  line-height:.98;letter-spacing:-.015em;text-transform:uppercase;
+  margin-bottom:18px;
+}
+h1 .maize{color:var(--maize)}
+.role{
+  font-size:clamp(19px,2.4vw,23px);font-weight:500;color:#C9D1DF;margin-bottom:22px;
+}
+.hero p.bio{max-width:52ch;color:#AEB8C8;font-size:16.5px;margin-bottom:34px}
+.links{display:flex;flex-wrap:wrap;gap:12px}
+.btn{
+  font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.06em;
+  text-decoration:none;padding:11px 20px;border:1px solid var(--line-dark);
+  color:#E8ECF2;transition:border-color .18s,background .18s,color .18s;
+}
+.btn:hover{border-color:var(--maize);color:var(--maize)}
+.btn.primary{background:var(--maize);border-color:var(--maize);color:var(--navy-deep);font-weight:500}
+.btn.primary:hover{background:#FFD84D}
+.portrait{position:relative;width:300px;height:300px;justify-self:end}
+.portrait::before{
+  content:'';position:absolute;top:14px;left:14px;right:-14px;bottom:-14px;
+  border:1px solid var(--maize);
+}
+.portrait img{
+  position:relative;width:100%;height:100%;object-fit:cover;display:block;
+  filter:saturate(.96);
+}
+.portrait .coord{
+  position:absolute;left:0;bottom:-38px;
+  font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.12em;color:var(--muted-light);
+}
+
+/* ---------- sections ---------- */
+section{max-width:1060px;margin:0 auto;padding:0 24px}
+h2{
+  font-variation-settings:'wdth' 116;font-weight:800;text-transform:uppercase;
+  font-size:clamp(26px,3.4vw,34px);letter-spacing:.01em;margin-bottom:34px;
+}
+
+/* experience */
+.xp{display:grid;grid-template-columns:180px 1fr;gap:10px 40px;padding:30px 0;border-top:1px solid var(--line)}
+.xp:last-of-type{border-bottom:1px solid var(--line)}
+.xp .when{font-family:'IBM Plex Mono',monospace;font-size:12.5px;letter-spacing:.08em;color:var(--gold-ink);padding-top:5px}
+.xp h3{font-size:20px;font-weight:700}
+.xp .org{color:var(--muted);font-weight:500;margin-bottom:10px}
+.xp ul{list-style:none}
+.xp li{position:relative;padding-left:20px;margin-bottom:8px;color:#333D4E;font-size:16px}
+.xp li::before{content:'—';position:absolute;left:0;color:var(--gold-ink)}
+
+/* projects */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.card{
+  border:1px solid var(--line);background:#fff;padding:30px 28px;
+  display:flex;flex-direction:column;gap:14px;
+  transition:transform .18s,box-shadow .18s;
+}
+.card:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(16,29,51,.08)}
+.card .tag{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.14em;color:var(--gold-ink)}
+.card h3{font-size:21px;font-weight:750}
+.card p{color:#333D4E;font-size:15.5px;flex:1}
+.card .stack{display:flex;flex-wrap:wrap;gap:8px}
+.card .stack span{
+  font-family:'IBM Plex Mono',monospace;font-size:11.5px;
+  border:1px solid var(--line);padding:4px 10px;color:var(--muted);
+}
+.card a.repo{
+  font-family:'IBM Plex Mono',monospace;font-size:13px;text-decoration:none;
+  color:var(--ink);border-bottom:2px solid var(--maize);align-self:flex-start;padding-bottom:2px;
+}
+.card a.repo:hover{color:var(--gold-ink)}
+
+/* skills */
+.skillrow{display:grid;grid-template-columns:180px 1fr;gap:10px 40px;padding:18px 0;border-top:1px solid var(--line);align-items:baseline}
+.skillrow:last-of-type{border-bottom:1px solid var(--line)}
+.skillrow .k{font-family:'IBM Plex Mono',monospace;font-size:12.5px;letter-spacing:.1em;color:var(--gold-ink);text-transform:uppercase}
+.skillrow .v{color:#333D4E;font-size:16px}
+
+/* education strip */
+.edu{
+  display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;align-items:baseline;
+  border:1px solid var(--line);background:#fff;padding:24px 28px;
+}
+.edu strong{font-size:18px;font-weight:750}
+.edu .detail{color:var(--muted);font-size:15.5px}
+.edu .mono{font-size:12.5px;letter-spacing:.08em;color:var(--gold-ink)}
+
+/* contact / footer */
+footer{background:var(--navy);color:#E8ECF2;margin-top:96px}
+.contact{
+  max-width:1060px;margin:0 auto;padding:80px 24px 64px;
+}
+.contact h2{color:#fff;margin-bottom:14px}
+.contact p{color:#AEB8C8;max-width:56ch;margin-bottom:30px}
+.contact .links{margin-bottom:56px}
+.footline{
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
+  border-top:1px solid var(--line-dark);padding-top:22px;
+  font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.12em;color:var(--muted-light);
+}
+
+/* nav */
+nav{
+  position:sticky;top:0;z-index:10;background:rgba(20,35,63,.92);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line-dark);
+}
+.navin{
+  max-width:1060px;margin:0 auto;padding:14px 24px;
+  display:flex;justify-content:space-between;align-items:center;gap:16px;
+}
+.navin .logo{
+  font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.16em;
+  color:var(--maize);text-decoration:none;font-weight:500;
+}
+.navin .navlinks{display:flex;gap:26px}
+.navin .navlinks a{
+  font-family:'IBM Plex Mono',monospace;font-size:12.5px;letter-spacing:.1em;
+  color:#C9D1DF;text-decoration:none;
+}
+.navin .navlinks a:hover{color:var(--maize)}
+
+@media (max-width:820px){
+  .hero{grid-template-columns:1fr;padding:64px 24px 96px;gap:48px}
+  .portrait{justify-self:start;width:min(300px,72vw);height:min(300px,72vw)}
+  .xp,.skillrow{grid-template-columns:1fr;gap:6px}
+  .grid{grid-template-columns:1fr}
+  .navin .navlinks{gap:16px}
+  .telemetry{margin-top:64px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="navin">
+    <a class="logo" href="#top">JW://</a>
+    <div class="navlinks">
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<header id="top">
+  <div class="hero">
+    <div>
+      <div class="status mono"><span class="dot"></span>OPEN TO SWE &amp; AI ROLES · MAY 2026 GRAD</div>
+      <h1>Jerry<br>Wang<span class="maize">.</span></h1>
+      <div class="role">Software &amp; AI Engineer — University of Michigan CS</div>
+      <p class="bio">I build systems that have to work when it counts — event-driven platforms handling 10K+ requests a minute, AI agents that automate real engineering workflows, and flight software that flew on live rocket launches.</p>
+      <div class="links">
+        <a class="btn primary" href="Jerry_Wang_Resume.pdf">Download resume</a>
+        <a class="btn" href="https://github.com/JerryW04">GitHub</a>
+        <a class="btn" href="https://www.linkedin.com/in/jerry-wang1">LinkedIn</a>
+        <a class="btn" href="mailto:jerrywa@umich.edu">Email</a>
+      </div>
+    </div>
+    <div class="portrait">
+      <img src="headshot.png" alt="Jerry Wang, graduation portrait at the University of Michigan" width="300" height="300">
+      <div class="coord">42.2808° N, 83.7430° W — ANN ARBOR, MI</div>
+    </div>
+  </div>
+</header>
+
+<div class="telemetry"><span class="t-label">T+01 · EXPERIENCE</span><div class="t-axis"></div></div>
+<section id="experience">
+  <h2>Experience</h2>
+
+  <div class="xp">
+    <div class="when">MAY 2025 — MAR 2026</div>
+    <div>
+      <h3>Platform &amp; Software Engineer</h3>
+      <div class="org">Savant Labs · San Mateo, CA</div>
+      <ul>
+        <li>Architected a DataFabric-based metadata exchange framework that eliminated direct DB coupling from the JVM runtime, unlocking VPC-compatible deployments.</li>
+        <li>Built event-driven pub-sub pipelines for metadata reads/writes, sustaining 10K+ requests/min across synchronous and asynchronous workflows.</li>
+        <li>Developed and shipped an internal AI agent for incident triage and Slack summarization, serving 80+ interactions a day across engineering teams.</li>
+        <li>Researched Agent2Agent (A2A) protocols for multi-agent orchestration spanning 5+ integrated tools and services.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="xp">
+    <div class="when">JAN 2023 — MAY 2025</div>
+    <div>
+      <h3>Software Development Co-Lead</h3>
+      <div class="org">Michigan Aeronautical Science Association · Ann Arbor, MI</div>
+      <ul>
+        <li>Led flight software and telemetry development for high-powered rockets across 5+ live test launches.</li>
+        <li>Built telemetry pipelines feeding mission control with real-time monitoring and low-latency visualization during flight operations.</li>
+        <li>Implemented guidance algorithms and automated pre-launch diagnostics with mechanical and avionics teams, cutting check time ~30%.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="xp">
+    <div class="when">SEP 2022</div>
+    <div>
+      <h3>Team Leader</h3>
+      <div class="org">MSU Programming Competition · East Lansing, MI</div>
+      <ul>
+        <li>Led a 3-person team to a top-3 finish out of 50 on high-difficulty data structures and algorithms problems under time pressure.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="telemetry"><span class="t-label">T+02 · PROJECTS</span><div class="t-axis"></div></div>
+<section id="projects">
+  <h2>Projects</h2>
+  <div class="grid">
+    <div class="card">
+      <span class="tag">DEEP LEARNING · APR 2025</span>
+      <h3>Image Classifier — CNNs &amp; ViT</h3>
+      <p>Trained CNN-based classifiers to 97.4% validation AUROC, then applied transfer learning and Vision Transformers to push test AUROC past 0.80 — analyzing the trade-offs between accuracy, compute cost, and parameter efficiency across architectures.</p>
+      <div class="stack"><span>Python</span><span>PyTorch</span><span>NumPy</span><span>ViT</span></div>
+      <a class="repo" href="https://github.com/JerryW04">View on GitHub →</a>
+    </div>
+    <div class="card">
+      <span class="tag">DISTRIBUTED SYSTEMS · DEC 2024</span>
+      <h3>Scalable Search Engine</h3>
+      <p>Built a search engine over 1M+ web documents with tf-idf ranking, PageRank, and a segmented inverted index — served by a MapReduce pipeline and Flask index/search servers with parallel query processing over REST.</p>
+      <div class="stack"><span>SQL</span><span>Flask</span><span>MapReduce</span><span>REST</span></div>
+      <a class="repo" href="https://github.com/JerryW04">View on GitHub →</a>
+    </div>
+  </div>
+</section>
+
+<div class="telemetry"><span class="t-label">T+03 · SKILLS</span><div class="t-axis"></div></div>
+<section id="skills">
+  <h2>Skills</h2>
+  <div class="skillrow"><div class="k">Languages</div><div class="v">Java · Python · C++ · C · SQL · JavaScript · Bash · HTML/CSS · MATLAB · R</div></div>
+  <div class="skillrow"><div class="k">Frameworks</div><div class="v">Flask · React · Node.js · Django · FastAPI</div></div>
+  <div class="skillrow"><div class="k">Tools</div><div class="v">Git · Docker · Kubernetes · AWS · GCP · Gradle · Maven</div></div>
+  <div class="skillrow"><div class="k">Libraries</div><div class="v">NumPy · pandas · Matplotlib · BeautifulSoup · Requests</div></div>
+</section>
+
+<div class="telemetry"><span class="t-label">T+04 · EDUCATION</span><div class="t-axis"></div></div>
+<section id="education">
+  <div class="edu">
+    <div>
+      <strong>University of Michigan — College of Engineering</strong>
+      <div class="detail">B.S.E. in Computer Science, Minor in Music · GPA 3.64/4.0</div>
+    </div>
+    <div class="mono">AUG 2022 — MAY 2026</div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="contact">
+    <div class="status mono"><span class="dot"></span>SIGNAL ACQUIRED</div>
+    <h2>Let's talk.</h2>
+    <p>I'm looking for software and AI engineering roles where reliability matters. If you're building something that has to work in production — or in flight — I'd love to hear about it.</p>
+    <div class="links">
+      <a class="btn primary" href="mailto:jerrywa@umich.edu">jerrywa@umich.edu</a>
+      <a class="btn" href="https://www.linkedin.com/in/jerry-wang1">LinkedIn</a>
+      <a class="btn" href="https://github.com/JerryW04">GitHub</a>
+    </div>
+    <div class="footline">
+      <span>© 2026 JERRY WANG</span>
+      <span>ANN ARBOR, MI · U.S. CITIZEN</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
