@@ -1,989 +1,386 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jerry Wang — Software & AI Engineer</title>
-    <meta name="description"
-        content="Jerry Wang is a software and AI engineer from the University of Michigan with experience in distributed systems, platform engineering, and applied AI.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet">
-    <style>
-        :root {
-            --bg: #181818;
-            --bg-soft: #1F1F1F;
-            --card: #FFFFFF;
-            --ink: #161616;
-            --white: #F5F5F3;
-            --ghost: #3A3A3A;
-            --gray: #9C9C9C;
-            --gray-dark: #6E6E6E;
-            --orange: #E4602F;
-            --orange-soft: #E8734A;
-            --lime: #D9F855;
-            --line: #2C2C2C;
-            --ease: cubic-bezier(.22, .61, .21, 1);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box
-        }
-
-        ::selection {
-            background: var(--orange);
-            color: #fff
-        }
-
-        html {
-            scroll-behavior: smooth
-        }
-
-        body {
-            background: var(--bg);
-            color: var(--white);
-            font-family: 'Poppins', sans-serif;
-            font-size: 16px;
-            line-height: 1.7;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        a {
-            color: inherit
-        }
-
-        a:focus-visible,
-        button:focus-visible,
-        input:focus-visible,
-        textarea:focus-visible,
-        select:focus-visible {
-            outline: 2px solid var(--orange);
-            outline-offset: 3px
-        }
-
-        /* reveals */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity .8s var(--ease), transform .8s var(--ease)
-        }
-
-        .reveal.in {
-            opacity: 1;
-            transform: none
-        }
-
-        .stagger>* {
-            opacity: 0;
-            transform: translateY(26px);
-            transition: opacity .7s var(--ease), transform .7s var(--ease)
-        }
-
-        .stagger.in>* {
-            opacity: 1;
-            transform: none
-        }
-
-        .stagger.in>*:nth-child(1) {
-            transition-delay: .06s
-        }
-
-        .stagger.in>*:nth-child(2) {
-            transition-delay: .14s
-        }
-
-        .stagger.in>*:nth-child(3) {
-            transition-delay: .22s
-        }
-
-        .stagger.in>*:nth-child(4) {
-            transition-delay: .30s
-        }
-
-        .stagger.in>*:nth-child(5) {
-            transition-delay: .38s
-        }
-
-        .stagger.in>*:nth-child(6) {
-            transition-delay: .46s
-        }
-
-        /* floating pill nav */
-        .nav {
-            position: fixed;
-            top: 22px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 100;
-            background: rgba(34, 34, 34, .85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--line);
-            border-radius: 16px;
-            padding: 10px 18px;
-            display: flex;
-            gap: 8px;
-        }
-
-        .nav a {
-            width: 44px;
-            height: 40px;
-            display: grid;
-            place-items: center;
-            border-radius: 10px;
-            color: var(--gray);
-            transition: color .25s var(--ease), background .25s var(--ease);
-        }
-
-        .nav a:hover {
-            color: #fff;
-            background: rgba(255, 255, 255, .08)
-        }
-
-        .nav svg {
-            width: 20px;
-            height: 20px;
-            fill: none;
-            stroke: currentColor;
-            stroke-width: 1.8;
-            stroke-linecap: round;
-            stroke-linejoin: round
-        }
-
-        /* layout */
-        .shell {
-            max-width: 1440px;
-            margin: 0 auto;
-            padding: 96px 40px 60px;
-            display: grid;
-            grid-template-columns: 400px 1fr;
-            gap: 64px;
-            align-items: start;
-        }
-
-        /* ---------- profile card ---------- */
-        .profile {
-            position: sticky;
-            top: 96px;
-            background: var(--card);
-            color: var(--ink);
-            border-radius: 24px;
-            padding: 40px 36px;
-            min-height: calc(100vh - 156px);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            overflow: hidden;
-        }
-
-        .profile .arc {
-            position: absolute;
-            top: -40px;
-            left: -60px;
-            width: 240px;
-            height: 240px;
-            pointer-events: none;
-        }
-
-        .profile .arc circle {
-            fill: none;
-            stroke: var(--orange);
-            stroke-width: 3;
-            stroke-dasharray: 10 12;
-            animation: spin 28s linear infinite;
-            transform-origin: center;
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg)
-            }
-        }
-
-        .avatar {
-            width: 100%;
-            max-width: 300px;
-            aspect-ratio: 1/1;
-            border-radius: 20px;
-            overflow: hidden;
-            margin-bottom: 30px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            transition: transform .6s var(--ease);
-        }
-
-        .avatar:hover img {
-            transform: scale(1.04)
-        }
-
-        .profile h1 {
-            font-size: 34px;
-            font-weight: 800;
-            letter-spacing: -.01em;
-            line-height: 1.2;
-            margin-bottom: 18px
-        }
-
-        .profile .blurb {
-            color: #4E4E4B;
-            font-size: 15.5px;
-            max-width: 30ch;
-            flex: 1
-        }
-
-        .socials {
-            display: flex;
-            gap: 22px;
-            margin-top: 26px
-        }
-
-        .socials a {
-            color: var(--orange);
-            transition: transform .3s var(--ease), color .3s var(--ease);
-        }
-
-        .socials a:hover {
-            transform: translateY(-4px);
-            color: var(--ink)
-        }
-
-        .socials svg {
-            width: 24px;
-            height: 24px;
-            fill: none;
-            stroke: currentColor;
-            stroke-width: 1.8;
-            stroke-linecap: round;
-            stroke-linejoin: round
-        }
-
-        /* ---------- right column ---------- */
-        .content {
-            min-width: 0
-        }
-
-        .giant {
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: -.02em;
-            font-size: clamp(56px, 7.2vw, 112px);
-            line-height: .98;
-        }
-
-        .giant .dim {
-            display: block;
-            color: var(--ghost)
-        }
-
-        .lede {
-            color: var(--gray);
-            max-width: 52ch;
-            font-size: 17px;
-            margin-top: 34px
-        }
-
-        /* service cards */
-        .cards {
-            display: grid;
-            grid-template-columns: 1fr 1.4fr;
-            gap: 26px;
-            margin-top: 110px
-        }
-
-        .svc {
-            border-radius: 22px;
-            padding: 36px 32px;
-            min-height: 300px;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            text-decoration: none;
-            transition: transform .45s var(--ease), box-shadow .45s var(--ease);
-        }
-
-        .svc:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 22px 50px rgba(0, 0, 0, .45)
-        }
-
-        .svc.orange {
-            background: var(--orange);
-            color: #fff
-        }
-
-        .svc.orange::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            opacity: .18;
-            background: radial-gradient(circle at 80% 15%, #fff 0, transparent 45%);
-        }
-
-        .svc.lime {
-            background: var(--lime);
-            color: #1A1A18
-        }
-
-        .svc.lime::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            opacity: .25;
-            background: repeating-linear-gradient(115deg, transparent 0 46px, rgba(26, 26, 24, .16) 46px 48px);
-        }
-
-        .svc .icon {
-            font-size: 30px;
-            margin-bottom: 26px;
-            position: relative;
-            z-index: 1
-        }
-
-        .svc h3 {
-            font-size: clamp(21px, 2vw, 26px);
-            font-weight: 700;
-            text-transform: uppercase;
-            line-height: 1.3;
-            position: relative;
-            z-index: 1;
-            flex: 1;
-        }
-
-        .svc .arrow {
-            align-self: flex-end;
-            width: 52px;
-            height: 52px;
-            border-radius: 12px;
-            border: 1.5px solid currentColor;
-            display: grid;
-            place-items: center;
-            font-size: 20px;
-            position: relative;
-            z-index: 1;
-            transition: transform .35s var(--ease), background .35s var(--ease);
-        }
-
-        .svc:hover .arrow {
-            transform: translate(4px, -4px)
-        }
-
-        .svc.orange:hover .arrow {
-            background: rgba(255, 255, 255, .15)
-        }
-
-        .svc.lime:hover .arrow {
-            background: rgba(26, 26, 24, .1)
-        }
-
-        /* section heading spacing */
-        .sect {
-            margin-top: 150px
-        }
-
-        /* projects */
-        .proj {
-            display: grid;
-            grid-template-columns: 220px 1fr auto;
-            gap: 34px;
-            align-items: center;
-            padding: 34px 0;
-            border-bottom: 1px solid var(--line);
-            text-decoration: none;
-        }
-
-        .proj:first-of-type {
-            margin-top: 56px;
-            border-top: 1px solid var(--line)
-        }
-
-        .thumb {
-            width: 220px;
-            height: 150px;
-            border-radius: 16px;
-            overflow: hidden;
-            position: relative;
-            display: grid;
-            place-items: center;
-            font-weight: 700;
-            font-size: 13px;
-            letter-spacing: .14em;
-            transition: transform .45s var(--ease);
-        }
-
-        .proj:hover .thumb {
-            transform: scale(1.04)
-        }
-
-        .thumb.t1 {
-            background: linear-gradient(135deg, #7B4DE0, #3A1F7A);
-            color: #EDE6FF
-        }
-
-        .thumb.t2 {
-            background: linear-gradient(135deg, #2F8F6B, #123B2C);
-            color: #DFF5EA
-        }
-
-        .proj h3 {
-            font-size: clamp(24px, 2.6vw, 34px);
-            font-weight: 700;
-            letter-spacing: -.01em
-        }
-
-        .proj .sub {
-            color: var(--gray);
-            margin-top: 6px
-        }
-
-        .proj .go {
-            color: var(--orange);
-            font-size: 26px;
-            transition: transform .35s var(--ease);
-        }
-
-        .proj:hover .go {
-            transform: translate(6px, -6px)
-        }
-
-        /* experience */
-        .job {
-            padding: 44px 0;
-            border-bottom: 1px solid var(--line);
-            position: relative
-        }
-
-        .job:first-of-type {
-            margin-top: 56px;
-            border-top: 1px solid var(--line)
-        }
-
-        .job h3 {
-            font-size: clamp(24px, 2.6vw, 32px);
-            font-weight: 700;
-            display: flex;
-            align-items: baseline;
-            gap: 14px;
-        }
-
-        .job h3 .go {
-            color: var(--orange);
-            font-size: 22px;
-            opacity: 0;
-            transform: translate(-6px, 6px);
-            transition: opacity .35s var(--ease), transform .35s var(--ease)
-        }
-
-        .job:hover h3 .go {
-            opacity: 1;
-            transform: none
-        }
-
-        .job .role {
-            color: var(--orange-soft);
-            font-size: 14px;
-            letter-spacing: .1em;
-            text-transform: uppercase;
-            margin-top: 6px
-        }
-
-        .job p {
-            color: var(--gray);
-            max-width: 60ch;
-            margin-top: 16px
-        }
-
-        .job .when {
-            color: var(--gray-dark);
-            margin-top: 18px;
-            font-size: 15px
-        }
-
-        /* tools */
-        .tools {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px 44px;
-            margin-top: 56px
-        }
-
-        .tool {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            padding: 14px;
-            border-radius: 16px;
-            transition: background .3s var(--ease), transform .3s var(--ease);
-        }
-
-        .tool:hover {
-            background: var(--bg-soft);
-            transform: translateY(-3px)
-        }
-
-        .tool .ticon {
-            width: 62px;
-            height: 62px;
-            border-radius: 14px;
-            background: var(--card);
-            display: grid;
-            place-items: center;
-            flex: none;
-            padding: 11px;
-        }
-
-        .tool .ticon img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            display: block
-        }
-
-        .tool h4 {
-            font-size: 19px;
-            font-weight: 700
-        }
-
-        .tool .sub {
-            color: var(--gray);
-            font-size: 14.5px
-        }
-
-        /* contact */
-        .form {
-            margin-top: 64px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 26px
-        }
-
-        .field {
-            display: flex;
-            flex-direction: column;
-            gap: 10px
-        }
-
-        .field.full {
-            grid-column: 1/-1
-        }
-
-        label {
-            font-size: 15px;
-            color: var(--white)
-        }
-
-        input,
-        textarea {
-            background: #242424;
-            border: 1px solid var(--line);
-            border-radius: 12px;
-            color: var(--white);
-            font-family: 'Poppins', sans-serif;
-            font-size: 15.5px;
-            padding: 16px 18px;
-            width: 100%;
-            transition: border-color .3s var(--ease);
-        }
-
-        input:hover,
-        textarea:hover {
-            border-color: #3E3E3E
-        }
-
-        input:focus,
-        textarea:focus {
-            border-color: var(--orange);
-            outline: none
-        }
-
-        textarea {
-            min-height: 170px;
-            resize: vertical
-        }
-
-        .submit {
-            grid-column: 1/-1;
-            background: var(--orange);
-            color: #fff;
-            border: none;
-            border-radius: 12px;
-            font-family: 'Poppins', sans-serif;
-            font-size: 17px;
-            font-weight: 600;
-            padding: 18px;
-            cursor: pointer;
-            transition: transform .3s var(--ease), background .3s var(--ease);
-        }
-
-        .submit:hover {
-            background: #EF6E3C;
-            transform: translateY(-2px)
-        }
-
-        .formnote {
-            grid-column: 1/-1;
-            color: var(--gray-dark);
-            font-size: 13.5px;
-            text-align: center
-        }
-
-        /* footer */
-        .footer {
-            margin-top: 130px;
-            padding: 34px 0 10px;
-            border-top: 1px solid var(--line);
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 10px;
-            color: var(--gray-dark);
-            font-size: 14px;
-        }
-
-        @media (max-width:1080px) {
-            .shell {
-                grid-template-columns: 1fr;
-                gap: 56px;
-                padding-top: 110px
-            }
-
-            .profile {
-                position: static;
-                min-height: 0
-            }
-
-            .cards {
-                grid-template-columns: 1fr
-            }
-
-            .tools {
-                grid-template-columns: 1fr
-            }
-        }
-
-        @media (max-width:640px) {
-            .shell {
-                padding: 100px 20px 40px
-            }
-
-            .proj {
-                grid-template-columns: 1fr;
-                gap: 18px
-            }
-
-            .thumb {
-                width: 100%
-            }
-
-            .proj .go {
-                display: none
-            }
-
-            .form {
-                grid-template-columns: 1fr
-            }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            html {
-                scroll-behavior: auto
-            }
-
-            *,
-            *::before,
-            *::after {
-                animation: none !important;
-                transition: none !important
-            }
-
-            .reveal,
-            .stagger>* {
-                opacity: 1 !important;
-                transform: none !important
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jerry Wang — Software & AI Engineer</title>
+<meta name="description" content="Jerry Wang is a software and AI engineer from the University of Michigan with experience in distributed systems, platform engineering, and applied AI.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#151514;
+  --panel:#1B1B1A;
+  --card:#FDFDFB;
+  --ink:#171716;
+  --white:#EDECE8;
+  --dim:#403F3B;
+  --gray:#8F8E88;
+  --gray-dark:#63625D;
+  --accent:#E4602F;
+  --line:#272724;
+  --line-light:#E4E3DD;
+  --ease:cubic-bezier(.22,.61,.21,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+::selection{background:var(--accent);color:#fff}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--white);
+  font-family:'Hanken Grotesk',sans-serif;font-size:16.5px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+/* reveals */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+.stagger>*{opacity:0;transform:translateY(20px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.stagger.in>*{opacity:1;transform:none}
+.stagger.in>*:nth-child(1){transition-delay:.05s}
+.stagger.in>*:nth-child(2){transition-delay:.12s}
+.stagger.in>*:nth-child(3){transition-delay:.19s}
+.stagger.in>*:nth-child(4){transition-delay:.26s}
+.stagger.in>*:nth-child(5){transition-delay:.33s}
+.stagger.in>*:nth-child(6){transition-delay:.40s}
+.stagger.in>*:nth-child(7){transition-delay:.47s}
+.stagger.in>*:nth-child(8){transition-delay:.54s}
+
+/* nav */
+.nav{
+  position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:100;
+  background:rgba(27,27,26,.8);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border:1px solid var(--line);border-radius:14px;padding:8px 12px;
+  display:flex;gap:4px;
+}
+.nav a{
+  width:42px;height:38px;display:grid;place-items:center;border-radius:9px;
+  color:var(--gray);transition:color .25s var(--ease),background .25s var(--ease);
+}
+.nav a:hover{color:var(--white);background:rgba(255,255,255,.06)}
+.nav svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+
+/* layout */
+.shell{
+  max-width:1360px;margin:0 auto;padding:96px 40px 60px;
+  display:grid;grid-template-columns:380px 1fr;gap:72px;align-items:start;
+}
+
+/* profile card */
+.profile{
+  position:sticky;top:96px;
+  background:var(--card);color:var(--ink);border-radius:20px;
+  padding:36px 34px;min-height:calc(100vh - 156px);
+  display:flex;flex-direction:column;align-items:center;text-align:center;
+}
+.avatar{
+  width:100%;max-width:290px;aspect-ratio:1/1;border-radius:16px;overflow:hidden;margin-bottom:28px;
+}
+.avatar img{
+  width:100%;height:100%;object-fit:cover;display:block;
+  transition:transform .7s var(--ease);
+}
+.avatar:hover img{transform:scale(1.03)}
+.profile h1{font-size:31px;font-weight:800;letter-spacing:-.02em;line-height:1.2;margin-bottom:14px}
+.profile .blurb{color:#5A5955;font-size:15px;max-width:30ch;flex:1;line-height:1.65}
+.socials{display:flex;gap:8px;margin-top:24px}
+.socials a{
+  width:44px;height:44px;display:grid;place-items:center;border-radius:11px;
+  color:var(--ink);border:1px solid var(--line-light);
+  transition:transform .3s var(--ease),border-color .3s var(--ease),color .3s var(--ease);
+}
+.socials a:hover{transform:translateY(-3px);border-color:var(--accent);color:var(--accent)}
+.socials svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+
+/* right column */
+.content{min-width:0}
+.giant{
+  font-weight:800;text-transform:uppercase;letter-spacing:-.02em;
+  font-size:clamp(42px,5.6vw,82px);line-height:1.02;
+}
+.giant .dim{display:block;color:var(--dim)}
+.lede{color:var(--gray);max-width:54ch;font-size:17px;margin-top:30px}
+
+/* quick links */
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:80px}
+.svc{
+  border:1px solid var(--line);background:var(--panel);border-radius:16px;
+  padding:26px 26px 22px;display:flex;flex-direction:column;gap:26px;text-decoration:none;
+  transition:border-color .35s var(--ease),transform .35s var(--ease);
+}
+.svc:hover{border-color:var(--accent);transform:translateY(-3px)}
+.svc .k{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--gray-dark)}
+.svc .row{display:flex;justify-content:space-between;align-items:center;gap:14px}
+.svc h3{font-size:21px;font-weight:700;letter-spacing:-.01em}
+.svc .arrow{color:var(--accent);font-size:20px;transition:transform .35s var(--ease)}
+.svc:hover .arrow{transform:translateX(5px)}
+
+/* sections */
+.sect{margin-top:140px}
+
+/* projects */
+.proj{
+  display:grid;grid-template-columns:190px 1fr auto;gap:30px;align-items:center;
+  padding:30px 0;border-bottom:1px solid var(--line);text-decoration:none;
+}
+.proj:first-of-type{margin-top:48px;border-top:1px solid var(--line)}
+.thumb{
+  width:190px;height:126px;border-radius:12px;border:1px solid var(--line);background:var(--panel);
+  display:grid;place-items:center;font-weight:600;font-size:11.5px;letter-spacing:.2em;color:var(--gray-dark);
+  transition:border-color .4s var(--ease),color .4s var(--ease);
+}
+.proj:hover .thumb{border-color:var(--accent);color:var(--gray)}
+.proj h3{font-size:clamp(21px,2.3vw,28px);font-weight:700;letter-spacing:-.015em;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.live{
+  font-size:10.5px;letter-spacing:.14em;font-weight:700;color:var(--accent);
+  border:1px solid rgba(228,96,47,.45);border-radius:6px;padding:3px 8px;
+}
+.proj .sub{color:var(--gray);margin-top:6px;font-size:15px}
+.proj .go{color:var(--gray-dark);font-size:22px;transition:transform .35s var(--ease),color .35s var(--ease)}
+.proj:hover .go{transform:translate(5px,-5px);color:var(--accent)}
+
+/* experience */
+.job{padding:38px 0;border-bottom:1px solid var(--line)}
+.job:first-of-type{margin-top:48px;border-top:1px solid var(--line)}
+.job h3{font-size:clamp(21px,2.3vw,27px);font-weight:700;letter-spacing:-.015em}
+.job .role{color:var(--accent);font-size:13px;letter-spacing:.12em;text-transform:uppercase;margin-top:6px;font-weight:600}
+.job p{color:var(--gray);max-width:62ch;margin-top:14px;font-size:15.5px}
+.job .when{color:var(--gray-dark);margin-top:14px;font-size:14px}
+
+/* tools */
+.tools{display:grid;grid-template-columns:1fr 1fr;gap:14px 32px;margin-top:48px}
+.tool{
+  display:flex;align-items:center;gap:18px;padding:12px 14px;border-radius:14px;
+  border:1px solid transparent;
+  transition:border-color .3s var(--ease),transform .3s var(--ease);
+}
+.tool:hover{border-color:var(--line);transform:translateY(-2px)}
+.tool .ticon{
+  width:54px;height:54px;border-radius:12px;background:var(--card);
+  display:grid;place-items:center;flex:none;padding:10px;
+}
+.tool .ticon img{width:100%;height:100%;object-fit:contain;display:block}
+.tool h4{font-size:17.5px;font-weight:700}
+.tool .sub{color:var(--gray-dark);font-size:14px}
+
+/* contact */
+.form{margin-top:52px;display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.field{display:flex;flex-direction:column;gap:8px}
+.field.full{grid-column:1/-1}
+label{font-size:14px;color:var(--gray)}
+input,textarea{
+  background:var(--panel);border:1px solid var(--line);border-radius:11px;color:var(--white);
+  font-family:'Hanken Grotesk',sans-serif;font-size:15.5px;padding:15px 17px;width:100%;
+  transition:border-color .3s var(--ease);
+}
+input:hover,textarea:hover{border-color:#34342F}
+input:focus,textarea:focus{border-color:var(--accent);outline:none}
+textarea{min-height:160px;resize:vertical}
+.submit{
+  grid-column:1/-1;background:var(--white);color:var(--ink);border:none;border-radius:11px;
+  font-family:'Hanken Grotesk',sans-serif;font-size:16px;font-weight:700;padding:17px;cursor:pointer;
+  transition:transform .3s var(--ease),background .3s var(--ease),color .3s var(--ease);
+}
+.submit:hover{background:var(--accent);color:#fff;transform:translateY(-2px)}
+.formnote{grid-column:1/-1;color:var(--gray-dark);font-size:13px;text-align:center}
+
+/* footer */
+.footer{
+  margin-top:120px;padding:30px 0 8px;border-top:1px solid var(--line);
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
+  color:var(--gray-dark);font-size:13.5px;
+}
+
+@media (max-width:1080px){
+  .shell{grid-template-columns:1fr;gap:52px;padding-top:104px}
+  .profile{position:static;min-height:0}
+  .cards{grid-template-columns:1fr}
+  .tools{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+  .shell{padding:100px 20px 40px}
+  .proj{grid-template-columns:1fr;gap:16px}
+  .thumb{width:100%}
+  .proj .go{display:none}
+  .form{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .reveal,.stagger>*{opacity:1!important;transform:none!important}
+}
+</style>
 </head>
-
 <body id="top">
 
-    <nav class="nav" aria-label="Main">
-        <a href="#top" title="Home" aria-label="Home"><svg viewBox="0 0 24 24">
-                <path d="M3 11.5 12 4l9 7.5" />
-                <path d="M5.5 10.5V20h13v-9.5" />
-            </svg></a>
-        <a href="#experience" title="Experience" aria-label="Experience"><svg viewBox="0 0 24 24">
-                <rect x="3.5" y="7.5" width="17" height="12" rx="2" />
-                <path d="M9 7.5V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1.5" />
-            </svg></a>
-        <a href="#projects" title="Projects" aria-label="Projects"><svg viewBox="0 0 24 24">
-                <path d="M3.5 7a2 2 0 0 1 2-2h4l2 2.5h7a2 2 0 0 1 2 2V17a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z" />
-            </svg></a>
-        <a href="#contact" title="Contact" aria-label="Contact"><svg viewBox="0 0 24 24">
-                <rect x="3.5" y="5.5" width="17" height="13" rx="2" />
-                <path d="m4.5 7 7.5 6 7.5-6" />
-            </svg></a>
-    </nav>
+<nav class="nav" aria-label="Main">
+  <a href="#top" title="Home" aria-label="Home"><svg viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10.5V20h13v-9.5"/></svg></a>
+  <a href="#experience" title="Experience" aria-label="Experience"><svg viewBox="0 0 24 24"><rect x="3.5" y="7.5" width="17" height="12" rx="2"/><path d="M9 7.5V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1.5"/></svg></a>
+  <a href="#projects" title="Projects" aria-label="Projects"><svg viewBox="0 0 24 24"><path d="M3.5 7a2 2 0 0 1 2-2h4l2 2.5h7a2 2 0 0 1 2 2V17a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/></svg></a>
+  <a href="#contact" title="Contact" aria-label="Contact"><svg viewBox="0 0 24 24"><rect x="3.5" y="5.5" width="17" height="13" rx="2"/><path d="m4.5 7 7.5 6 7.5-6"/></svg></a>
+</nav>
 
-    <div class="shell">
+<div class="shell">
 
-        <!-- ================= LEFT CARD ================= -->
-        <aside class="profile reveal in">
-            <svg class="arc" viewBox="0 0 240 240" aria-hidden="true">
-                <circle cx="120" cy="120" r="100" />
-            </svg>
-            <div class="avatar"><img src="headshot.png" alt="Jerry Wang" width="300" height="300"></div>
-            <h1>Jerry Wang</h1>
-            <p class="blurb">A software engineer focused on building scalable, reliable systems and applied AI.</p>
-            <div class="socials">
-                <a href="https://github.com/JerryW04" title="GitHub" aria-label="GitHub"><svg viewBox="0 0 24 24">
-                        <path
-                            d="M12 2.5a9.5 9.5 0 0 0-3 18.5c.5.1.65-.2.65-.45v-1.6c-2.65.6-3.2-1.3-3.2-1.3-.45-1.1-1.05-1.4-1.05-1.4-.85-.6.05-.6.05-.6.95.05 1.45 1 1.45 1 .85 1.45 2.2 1.05 2.75.8.1-.6.35-1.05.6-1.3-2.1-.25-4.3-1.05-4.3-4.7 0-1.05.35-1.9 1-2.55-.1-.25-.45-1.2.1-2.55 0 0 .8-.25 2.6 1a9 9 0 0 1 4.75 0c1.8-1.25 2.6-1 2.6-1 .55 1.35.2 2.3.1 2.55.6.65 1 1.5 1 2.55 0 3.65-2.2 4.45-4.3 4.7.35.3.65.85.65 1.75v2.6c0 .25.15.55.65.45A9.5 9.5 0 0 0 12 2.5z" />
-                    </svg></a>
-                <a href="https://www.linkedin.com/in/jerry-wang1" title="LinkedIn" aria-label="LinkedIn"><svg
-                        viewBox="0 0 24 24">
-                        <rect x="3.5" y="3.5" width="17" height="17" rx="2.5" />
-                        <path d="M8 10.5v6M8 7.6v.05M12 16.5v-3.6a2.2 2.2 0 0 1 4.4 0v3.6" />
-                    </svg></a>
-                <a href="mailto:jerrywa@umich.edu" title="Email" aria-label="Email"><svg viewBox="0 0 24 24">
-                        <rect x="3.5" y="5.5" width="17" height="13" rx="2" />
-                        <path d="m4.5 7 7.5 6 7.5-6" />
-                    </svg></a>
-                <a href="Jerry_Wang_Resume.pdf" title="Resume" aria-label="Resume"><svg viewBox="0 0 24 24">
-                        <path d="M7 3.5h7l4 4V20a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 6 20V5a1.5 1.5 0 0 1 1-1.4z" />
-                        <path d="M14 3.5V8h4.5M9.5 12.5h5M9.5 16h5" />
-                    </svg></a>
-            </div>
-        </aside>
+  <!-- profile card -->
+  <aside class="profile reveal in">
+    <div class="avatar"><img src="headshot.png" alt="Jerry Wang" width="290" height="290"></div>
+    <h1>Jerry Wang</h1>
+    <p class="blurb">A software engineer focused on building scalable, reliable systems and applied AI.</p>
+    <div class="socials">
+      <a href="https://github.com/JerryW04" title="GitHub" aria-label="GitHub"><svg viewBox="0 0 24 24"><path d="M12 2.5a9.5 9.5 0 0 0-3 18.5c.5.1.65-.2.65-.45v-1.6c-2.65.6-3.2-1.3-3.2-1.3-.45-1.1-1.05-1.4-1.05-1.4-.85-.6.05-.6.05-.6.95.05 1.45 1 1.45 1 .85 1.45 2.2 1.05 2.75.8.1-.6.35-1.05.6-1.3-2.1-.25-4.3-1.05-4.3-4.7 0-1.05.35-1.9 1-2.55-.1-.25-.45-1.2.1-2.55 0 0 .8-.25 2.6 1a9 9 0 0 1 4.75 0c1.8-1.25 2.6-1 2.6-1 .55 1.35.2 2.3.1 2.55.6.65 1 1.5 1 2.55 0 3.65-2.2 4.45-4.3 4.7.35.3.65.85.65 1.75v2.6c0 .25.15.55.65.45A9.5 9.5 0 0 0 12 2.5z"/></svg></a>
+      <a href="https://www.linkedin.com/in/jerry-wang1" title="LinkedIn" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="2.5"/><path d="M8 10.5v6M8 7.6v.05M12 16.5v-3.6a2.2 2.2 0 0 1 4.4 0v3.6"/></svg></a>
+      <a href="mailto:jerrywa@umich.edu" title="Email" aria-label="Email"><svg viewBox="0 0 24 24"><rect x="3.5" y="5.5" width="17" height="13" rx="2"/><path d="m4.5 7 7.5 6 7.5-6"/></svg></a>
+      <a href="Jerry_Wang_Resume.pdf" title="Resume" aria-label="Resume"><svg viewBox="0 0 24 24"><path d="M7 3.5h7l4 4V20a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 6 20V5a1.5 1.5 0 0 1 1-1.4z"/><path d="M14 3.5V8h4.5M9.5 12.5h5M9.5 16h5"/></svg></a>
+    </div>
+  </aside>
 
-        <!-- ================= RIGHT CONTENT ================= -->
-        <main class="content">
+  <!-- content -->
+  <main class="content">
 
-            <!-- HERO -->
-            <section>
-                <h2 class="giant reveal">Software<span class="dim">Engineer</span></h2>
-                <p class="lede reveal">Computer Science graduate from the University of Michigan with experience in
-                    distributed systems, platform engineering, and applied AI. Focused on designing scalable, reliable
-                    software for production environments.</p>
-            </section>
+    <section>
+      <h2 class="giant reveal">Software<span class="dim">Engineer</span></h2>
+      <p class="lede reveal">Computer Science graduate from the University of Michigan with experience in distributed systems, platform engineering, and applied AI. Focused on designing scalable, reliable software for production environments.</p>
+    </section>
 
-            <!-- SERVICE CARDS -->
-            <div class="cards stagger">
-                <a class="svc orange" href="#experience">
-                    <div class="icon" aria-hidden="true">⬢</div>
-                    <h3>Past Experience</h3>
-                    <div class="arrow">→</div>
-                </a>
-                <a class="svc lime" href="#projects">
-                    <div class="icon" aria-hidden="true">▦</div>
-                    <h3>Recent Projects</h3>
-                    <div class="arrow">→</div>
-                </a>
-            </div>
-
-            <!-- PROJECTS -->
-            <section class="sect" id="projects">
-                <h2 class="giant reveal">Recent<span class="dim">Projects</span></h2>
-                <a class="proj reveal" href="https://github.com/JerryW04">
-                    <div class="thumb t1">CNN · VIT</div>
-                    <div>
-                        <h3>Deep Learning Image Classifier</h3>
-                        <div class="sub">97.4% validation AUROC · PyTorch, Vision Transformers</div>
-                    </div>
-                    <div class="go">↗</div>
-                </a>
-                <a class="proj reveal" href="https://github.com/JerryW04">
-                    <div class="thumb t2">1M+ DOCS</div>
-                    <div>
-                        <h3>Scalable Search Engine</h3>
-                        <div class="sub">tf-idf, PageRank &amp; MapReduce · Flask, REST, SQL</div>
-                    </div>
-                    <div class="go">↗</div>
-                </a>
-            </section>
-
-            <!-- EXPERIENCE -->
-            <section class="sect" id="experience">
-                <h2 class="giant reveal">Past<span class="dim">Experience</span></h2>
-
-                <div class="job reveal">
-                    <h3>Savant Labs <span class="go">↗</span></h3>
-                    <div class="role">Platform &amp; Software Engineer · San Mateo, CA</div>
-                    <p>Architected a DataFabric-based metadata exchange framework that eliminated direct DB coupling
-                        from the JVM runtime, built pub-sub pipelines sustaining 10K+ requests/min, and shipped an
-                        internal AI agent serving 80+ daily interactions across engineering teams.</p>
-                    <div class="when">May 2025 – Mar 2026</div>
-                </div>
-
-                <div class="job reveal">
-                    <h3>Michigan Aeronautical Science Association <span class="go">↗</span></h3>
-                    <div class="role">Software Development Co-Lead · Ann Arbor, MI</div>
-                    <p>Led flight software and telemetry development for high-powered rockets across 5+ live test
-                        launches — real-time telemetry pipelines into mission control, guidance algorithms, and
-                        automated pre-launch diagnostics that cut check time ~30%.</p>
-                    <div class="when">Jan 2023 – May 2025</div>
-                </div>
-
-                <div class="job reveal">
-                    <h3>MSU Programming Competition <span class="go">↗</span></h3>
-                    <div class="role">Team Leader · East Lansing, MI</div>
-                    <p>Led a 3-person team to a top-3 finish out of 50 on high-difficulty data structures and algorithms
-                        problems under intense time pressure.</p>
-                    <div class="when">Sep 2022</div>
-                </div>
-            </section>
-
-            <!-- TOOLS -->
-            <section class="sect">
-                <h2 class="giant reveal">Favorite<span class="dim">Tools</span></h2>
-                <div class="tools stagger">
-                    <div class="tool">
-                        <div class="ticon"><img
-                                src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pytorch/pytorch-original.svg"
-                                alt="PyTorch logo" loading="lazy"></div>
-                        <div>
-                            <h4>PyTorch</h4>
-                            <div class="sub">Deep learning framework</div>
-                        </div>
-                    </div>
-                    <div class="tool">
-                        <div class="ticon"><img
-                                src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg"
-                                alt="Docker logo" loading="lazy"></div>
-                        <div>
-                            <h4>Docker</h4>
-                            <div class="sub">Containers</div>
-                        </div>
-                    </div>
-                    <div class="tool">
-                        <div class="ticon"><img
-                                src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kubernetes/kubernetes-plain.svg"
-                                alt="Kubernetes logo" loading="lazy"></div>
-                        <div>
-                            <h4>Kubernetes</h4>
-                            <div class="sub">Orchestration</div>
-                        </div>
-                    </div>
-                    <div class="tool">
-                        <div class="ticon"><img
-                                src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg"
-                                alt="AWS logo" loading="lazy"></div>
-                        <div>
-                            <h4>AWS</h4>
-                            <div class="sub">Cloud platform</div>
-                        </div>
-                    </div>
-                    <div class="tool">
-                        <div class="ticon"><img
-                                src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/googlecloud/googlecloud-original.svg"
-                                alt="Google Cloud logo" loading="lazy"></div>
-                        <div>
-                            <h4>Google Cloud</h4>
-                            <div class="sub">Cloud platform</div>
-                        </div>
-                    </div>
-                    <div class="tool">
-                        <div class="ticon"><img
-                                src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg"
-                                alt="React logo" loading="lazy"></div>
-                        <div>
-                            <h4>React</h4>
-                            <div class="sub">Frontend framework</div>
-                        </div>
-                    </div>
-                    <div class="tool">
-                        <div class="ticon"><img
-                                src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/flask/flask-original.svg"
-                                alt="Flask logo" loading="lazy"></div>
-                        <div>
-                            <h4>Flask</h4>
-                            <div class="sub">Web framework</div>
-                        </div>
-                    </div>
-                    <div class="tool">
-                        <div class="ticon"><img
-                                src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg"
-                                alt="Git logo" loading="lazy"></div>
-                        <div>
-                            <h4>Git</h4>
-                            <div class="sub">Version control</div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- CONTACT -->
-            <section class="sect" id="contact">
-                <h2 class="giant reveal">Let's Work<span class="dim">Together</span></h2>
-                <form class="form stagger" id="contactForm">
-                    <div class="field">
-                        <label for="name">Name</label>
-                        <input id="name" name="name" type="text" placeholder="Your name" required>
-                    </div>
-                    <div class="field">
-                        <label for="email">Email</label>
-                        <input id="email" name="email" type="email" placeholder="your@email.com" required>
-                    </div>
-                    <div class="field full">
-                        <label for="message">Message</label>
-                        <textarea id="message" name="message" placeholder="Tell me about the role or project…"
-                            required></textarea>
-                    </div>
-                    <button class="submit" type="submit">Send message</button>
-                    <div class="formnote">Opens your email app addressed to jerrywa@umich.edu</div>
-                </form>
-            </section>
-
-            <div class="footer">
-                <span>© 2026 Jerry Wang</span>
-                <span>Ann Arbor, MI · U.S. Citizen</span>
-            </div>
-
-        </main>
+    <div class="cards stagger">
+      <a class="svc" href="#experience">
+        <span class="k">01</span>
+        <div class="row"><h3>Past Experience</h3><span class="arrow">→</span></div>
+      </a>
+      <a class="svc" href="#projects">
+        <span class="k">02</span>
+        <div class="row"><h3>Recent Projects</h3><span class="arrow">→</span></div>
+      </a>
     </div>
 
-    <script>
-        (function () {
-            var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    <section class="sect" id="projects">
+      <h2 class="giant reveal">Recent<span class="dim">Projects</span></h2>
 
-            /* scroll reveals */
-            var targets = document.querySelectorAll('.reveal,.stagger');
-            if (reduced || !('IntersectionObserver' in window)) {
-                targets.forEach(function (el) { el.classList.add('in') });
-            } else {
-                var io = new IntersectionObserver(function (entries) {
-                    entries.forEach(function (e) {
-                        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target) }
-                    });
-                }, { threshold: .12, rootMargin: '0px 0px -6% 0px' });
-                targets.forEach(function (el) { io.observe(el) });
-            }
+      <a class="proj reveal" href="https://jerryw04.github.io/ai-pictionary">
+        <div class="thumb">CNN · TENSORFLOW.JS</div>
+        <div>
+          <h3>AI Pictionary <span class="live">LIVE</span></h3>
+          <div class="sub">Draw a prompt and a neural network guesses it in real time — DoodleNet running fully in-browser, trained on 50M+ Quick, Draw! sketches.</div>
+        </div>
+        <div class="go">↗</div>
+      </a>
 
-            /* contact form -> mailto */
-            var form = document.getElementById('contactForm');
-            form.addEventListener('submit', function (ev) {
-                ev.preventDefault();
-                var name = document.getElementById('name').value.trim();
-                var email = document.getElementById('email').value.trim();
-                var msg = document.getElementById('message').value.trim();
-                var subject = encodeURIComponent('Portfolio contact from ' + name);
-                var body = encodeURIComponent(msg + '\n\n— ' + name + ' (' + email + ')');
-                window.location.href = 'mailto:jerrywa@umich.edu?subject=' + subject + '&body=' + body;
-            });
-        })();
-    </script>
+      <a class="proj reveal" href="https://github.com/JerryW04">
+        <div class="thumb">CNN · VIT</div>
+        <div>
+          <h3>Deep Learning Image Classifier</h3>
+          <div class="sub">97.4% validation AUROC · PyTorch, transfer learning, Vision Transformers</div>
+        </div>
+        <div class="go">↗</div>
+      </a>
+
+      <a class="proj reveal" href="https://github.com/JerryW04">
+        <div class="thumb">1M+ DOCS</div>
+        <div>
+          <h3>Scalable Search Engine</h3>
+          <div class="sub">tf-idf, PageRank &amp; MapReduce · Flask, REST, SQL</div>
+        </div>
+        <div class="go">↗</div>
+      </a>
+    </section>
+
+    <section class="sect" id="experience">
+      <h2 class="giant reveal">Past<span class="dim">Experience</span></h2>
+
+      <div class="job reveal">
+        <h3>Savant Labs</h3>
+        <div class="role">Platform &amp; Software Engineer · San Mateo, CA</div>
+        <p>Architected a DataFabric-based metadata exchange framework that eliminated direct DB coupling from the JVM runtime, built pub-sub pipelines sustaining 10K+ requests/min, and shipped an internal AI agent serving 80+ daily interactions across engineering teams.</p>
+        <div class="when">May 2025 – Mar 2026</div>
+      </div>
+
+      <div class="job reveal">
+        <h3>Michigan Aeronautical Science Association</h3>
+        <div class="role">Software Development Co-Lead · Ann Arbor, MI</div>
+        <p>Led flight software and telemetry development for high-powered rockets across 5+ live test launches — real-time telemetry pipelines into mission control, guidance algorithms, and automated pre-launch diagnostics that cut check time ~30%.</p>
+        <div class="when">Jan 2023 – May 2025</div>
+      </div>
+
+      <div class="job reveal">
+        <h3>MSU Programming Competition</h3>
+        <div class="role">Team Leader · East Lansing, MI</div>
+        <p>Led a 3-person team to a top-3 finish out of 50 on high-difficulty data structures and algorithms problems under intense time pressure.</p>
+        <div class="when">Sep 2022</div>
+      </div>
+    </section>
+
+    <section class="sect">
+      <h2 class="giant reveal">Favorite<span class="dim">Tools</span></h2>
+      <div class="tools stagger">
+        <div class="tool"><div class="ticon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pytorch/pytorch-original.svg" alt="PyTorch logo" loading="lazy"></div><div><h4>PyTorch</h4><div class="sub">Deep learning framework</div></div></div>
+        <div class="tool"><div class="ticon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg" alt="Docker logo" loading="lazy"></div><div><h4>Docker</h4><div class="sub">Containers</div></div></div>
+        <div class="tool"><div class="ticon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kubernetes/kubernetes-plain.svg" alt="Kubernetes logo" loading="lazy"></div><div><h4>Kubernetes</h4><div class="sub">Orchestration</div></div></div>
+        <div class="tool"><div class="ticon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="AWS logo" loading="lazy"></div><div><h4>AWS</h4><div class="sub">Cloud platform</div></div></div>
+        <div class="tool"><div class="ticon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/googlecloud/googlecloud-original.svg" alt="Google Cloud logo" loading="lazy"></div><div><h4>Google Cloud</h4><div class="sub">Cloud platform</div></div></div>
+        <div class="tool"><div class="ticon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" alt="React logo" loading="lazy"></div><div><h4>React</h4><div class="sub">Frontend framework</div></div></div>
+        <div class="tool"><div class="ticon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/flask/flask-original.svg" alt="Flask logo" loading="lazy"></div><div><h4>Flask</h4><div class="sub">Web framework</div></div></div>
+        <div class="tool"><div class="ticon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" alt="Git logo" loading="lazy"></div><div><h4>Git</h4><div class="sub">Version control</div></div></div>
+      </div>
+    </section>
+
+    <section class="sect" id="contact">
+      <h2 class="giant reveal">Let's Work<span class="dim">Together</span></h2>
+      <form class="form stagger" id="contactForm">
+        <div class="field">
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" placeholder="Your name" required>
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" placeholder="your@email.com" required>
+        </div>
+        <div class="field full">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" placeholder="Tell me about the role or project…" required></textarea>
+        </div>
+        <button class="submit" type="submit">Send message</button>
+        <div class="formnote">Opens your email app addressed to jerrywa@umich.edu</div>
+      </form>
+    </section>
+
+    <div class="footer">
+      <span>© 2026 Jerry Wang</span>
+      <span>Ann Arbor, MI · U.S. Citizen</span>
+    </div>
+
+  </main>
+</div>
+
+<script>
+(function(){
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var targets = document.querySelectorAll('.reveal,.stagger');
+  if(reduced || !('IntersectionObserver' in window)){
+    targets.forEach(function(el){el.classList.add('in')});
+  }else{
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}
+      });
+    },{threshold:.12,rootMargin:'0px 0px -6% 0px'});
+    targets.forEach(function(el){io.observe(el)});
+  }
+
+  var form = document.getElementById('contactForm');
+  form.addEventListener('submit', function(ev){
+    ev.preventDefault();
+    var name = document.getElementById('name').value.trim();
+    var email = document.getElementById('email').value.trim();
+    var msg = document.getElementById('message').value.trim();
+    var subject = encodeURIComponent('Portfolio contact from ' + name);
+    var body = encodeURIComponent(msg + '\n\n— ' + name + ' (' + email + ')');
+    window.location.href = 'mailto:jerrywa@umich.edu?subject=' + subject + '&body=' + body;
+  });
+})();
+</script>
 </body>
-
 </html>
