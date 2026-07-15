@@ -153,9 +153,11 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 .proj:first-of-type{margin-top:56px;border-top:1px solid var(--line)}
 .thumb{
   width:220px;height:150px;border-radius:16px;overflow:hidden;position:relative;
-  display:grid;place-items:center;font-weight:700;font-size:13px;letter-spacing:.14em;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
+  font-weight:700;font-size:11px;letter-spacing:.18em;
   transition:transform .45s var(--ease);
 }
+.thumb svg{width:64px;height:64px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;opacity:.95}
 .proj:hover .thumb{transform:scale(1.04)}
 .thumb.t0{background:linear-gradient(135deg,#E4602F,#7A2A12);color:#FFE3D6}
 .thumb.t1{background:linear-gradient(135deg,#7B4DE0,#3A1F7A);color:#EDE6FF}
@@ -295,7 +297,14 @@ textarea{min-height:170px;resize:vertical}
     <section class="sect" id="projects">
       <h2 class="giant reveal">Recent<span class="dim">Projects</span></h2>
       <a class="proj reveal" href="https://jerryw04.github.io/ai-pictionary">
-        <div class="thumb t0">LIVE · CNN</div>
+        <div class="thumb t0">
+          <svg viewBox="0 0 64 64" aria-hidden="true">
+            <path d="M8 46c6-14 14-20 18-16s-8 12-4 16 16-4 20-10"/>
+            <path d="M44 34 54 24l6 6-10 10-7 1z"/>
+            <path d="M54 24l6 6"/>
+          </svg>
+          AI PICTIONARY
+        </div>
         <div>
           <h3>AI Pictionary</h3>
           <div class="sub">Draw a prompt and a neural network guesses it live, in-browser · TensorFlow.js</div>
@@ -303,7 +312,17 @@ textarea{min-height:170px;resize:vertical}
         <div class="go">↗</div>
       </a>
       <a class="proj reveal" href="https://github.com/JerryW04">
-        <div class="thumb t1">CNN · VIT</div>
+        <div class="thumb t1">
+          <svg viewBox="0 0 64 64" aria-hidden="true">
+            <rect x="8" y="10" width="40" height="32" rx="4"/>
+            <circle cx="20" cy="21" r="4"/>
+            <path d="M8 36l12-10 10 8 8-6 10 8"/>
+            <path d="M40 46h16v10H40z"/>
+            <path d="M44 51h8"/>
+            <path d="M48 42v4"/>
+          </svg>
+          IMAGE CLASSIFIER
+        </div>
         <div>
           <h3>Deep Learning Image Classifier</h3>
           <div class="sub">97.4% validation AUROC · PyTorch, Vision Transformers</div>
@@ -311,7 +330,15 @@ textarea{min-height:170px;resize:vertical}
         <div class="go">↗</div>
       </a>
       <a class="proj reveal" href="https://github.com/JerryW04">
-        <div class="thumb t2">1M+ DOCS</div>
+        <div class="thumb t2">
+          <svg viewBox="0 0 64 64" aria-hidden="true">
+            <rect x="10" y="8" width="32" height="42" rx="4"/>
+            <path d="M17 17h18M17 24h18M17 31h10"/>
+            <circle cx="41" cy="39" r="11"/>
+            <path d="M49 47l8 8"/>
+          </svg>
+          SEARCH ENGINE
+        </div>
         <div>
           <h3>Scalable Search Engine</h3>
           <div class="sub">tf-idf, PageRank &amp; MapReduce · Flask, REST, SQL</div>
